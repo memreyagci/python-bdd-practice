@@ -14,9 +14,6 @@ from utils.config_reader import ConfigReader
 class Driver:
     driver = None
 
-    # def __init__(self):
-    #     self.driver = None
-
     @staticmethod
     def get_driver() -> webdriver:
         browser = ConfigReader().get_value("selenium", "browser")
