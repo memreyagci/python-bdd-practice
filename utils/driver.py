@@ -12,19 +12,21 @@ from utils.config_reader import ConfigReader
 
 
 class Driver:
+    driver = None
 
-    def __init__(self):
-        self.driver = None
+    # def __init__(self):
+    #     self.driver = None
 
-    def get_driver(self) -> webdriver:
+    @staticmethod
+    def get_driver() -> webdriver:
         browser = ConfigReader().get_value("selenium", "browser")
 
-        if self.driver is None:
+        if Driver.driver is None:
             if browser == "firefox":
                 firefox_options = FirefoxOptions()
                 firefox_options.add_argument("--detach")
 
-                self.driver = webdriver.Firefox(
+                Driver.driver = webdriver.Firefox(
                     executable_path=GeckoDriverManager().install(),
                     options=firefox_options)
 
@@ -32,7 +34,7 @@ class Driver:
                 chrome_options = ChromeOptions()
                 chrome_options.add_argument("--detach")
 
-                self.driver = webdriver.Firefox(
+                Driver.driver = webdriver.Firefox(
                     executable_path=ChromeDriverManager().install(),
                     options=chrome_options)
 
@@ -40,14 +42,15 @@ class Driver:
                 edge_options = EdgeOptions()
                 edge_options.add_argument("--detach")
 
-                self.driver = webdriver.Edge(
+                Driver.driver = webdriver.Edge(
                     executable_path=EdgeChromiumDriverManager().install(),
                     options=edge_options)
 
-        self.driver.maximize_window()
-        return self.driver
+        Driver.driver.maximize_window()
+        return Driver.driver
 
-    def close_driver(self):
-        if self.driver is not None:
-            self.driver.close()
-            self.driver = None
+    @staticmethod
+    def close_driver():
+        if Driver.driver is not None:
+            Driver.driver.close()
+            Driver.driver = None
