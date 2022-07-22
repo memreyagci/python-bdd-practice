@@ -1,6 +1,5 @@
 Feature: Login Feature
 
-  @wip
   Scenario Outline: Verify that user is able to log in as "<username>"
     When user is on login page
     And user types in "<username>" as username
