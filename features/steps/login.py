@@ -1,31 +1,33 @@
 from behave import when, then
-from utils.driver import Driver
+from utils import ConfigReader, Driver
 from pages import LoginPage
-from utils.config_reader import ConfigReader
-
-driver = Driver()
 
 
-@when(u'user is on login page')
+@when('user is on login page')
 def step_impl(context):
-    driver.get_driver().get(ConfigReader().get_value("swag-labs", "url"))
+    Driver.get_driver().get(ConfigReader().get_value("swag-labs", "url"))
 
 
-@when(u'user types in {username} as username')
+@when('user types in "{username}" as username')
 def step_impl(context, username):
-    driver.get_driver().find_element(*LoginPage.input_username).send_keys(username)
+    Driver.get_driver().find_element(*LoginPage.input_username).send_keys(username)
 
 
-@when(u'user types in {password} as password')
+@when('user types in "{password}" as password')
 def step_impl(context, password):
-    driver.get_driver().find_element(*LoginPage.input_password).send_keys(password)
+    Driver.get_driver().find_element(*LoginPage.input_password).send_keys(password)
 
 
-@when(u'user click login button')
+@when('user clicks login button')
 def step_impl(context):
-    driver.get_driver().find_element(*LoginPage.btn_login).click()
+    Driver.get_driver().find_element(*LoginPage.btn_login).click()
 
 
-@then(u'user is logged in')
+@then('user is logged in')
 def step_impl(context):
-    assert True
+    assert(Driver.get_driver().current_url,"https://www.saucedemo.com/inventory.html")
+
+
+@then('error message "{err_msg}" shows up')
+def step_impl(context, err_msg):
+    assert Driver.get_driver().find_element(*LoginPage.get_err_msg_web_element(err_msg)).is_displayed()
