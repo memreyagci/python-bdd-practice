@@ -10,8 +10,5 @@
 
 ### Utilities I have created:
 
-* *will be updated*
-
----
-
-### I will also be writing test cases for a demo website
+* **Driver**: To manage Selenium WebDriver from a central place to use it with ease of config files, preventing repetition of code and duplication of drivers being used
+* **ConfigurationReader**: To store values like browser type, testing environment URL, etc.
